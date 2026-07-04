@@ -1,0 +1,472 @@
+[
+    {
+        "date": "2019-04-18",
+        "odo": 1000,
+        "type": "maintain",
+        "title": "1千公里新車定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油、機油濾心"
+            }
+        ],
+        "totalCost": 2560,
+        "remark": ""
+    },
+    {
+        "date": "2019-07-09",
+        "odo": 5000,
+        "type": "maintain",
+        "title": "5千公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油"
+            }
+        ],
+        "totalCost": 0,
+        "remark": ""
+    },
+    {
+        "date": "2019-09-24",
+        "odo": 10000,
+        "type": "maintain",
+        "title": "1萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油、油濾"
+            }
+        ],
+        "totalCost": 1990,
+        "remark": ""
+    },
+    {
+        "date": "2019-12-30",
+        "odo": 15000,
+        "type": "maintain",
+        "title": "1.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油"
+            }
+        ],
+        "totalCost": 2246,
+        "remark": ""
+    },
+    {
+        "date": "2020-04-11",
+        "odo": 22000,
+        "type": "maintain",
+        "title": "2萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油、機油濾心、冷濾"
+            }
+        ],
+        "totalCost": 3373,
+        "remark": ""
+    },
+    {
+        "date": "2020-07-04",
+        "odo": 27000,
+        "type": "maintain",
+        "title": "2.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油"
+            }
+        ],
+        "totalCost": 2427,
+        "remark": ""
+    },
+    {
+        "date": "2020-10-17",
+        "odo": 32000,
+        "type": "maintain",
+        "title": "3萬公里大保養",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油、機油濾心、煞車油、空濾、汽油濾心"
+            },
+            {
+                "name": "電瓶更換",
+                "desc": "原廠電瓶"
+            },
+            {
+                "name": "額外保養",
+                "desc": "氫氧除碳"
+            }
+        ],
+        "totalCost": 10525,
+        "remark": "原廠電瓶$3641"
+    },
+    {
+        "date": "2021-01-23",
+        "odo": 37000,
+        "type": "maintain",
+        "title": "3.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)"
+            }
+        ],
+        "totalCost": 2778,
+        "remark": "機油Total-mc3-5w30 $235x4"
+    },
+    {
+        "date": "2021-05-01",
+        "odo": 42000,
+        "type": "maintain",
+        "title": "4萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、冷濾 (自備)"
+            }
+        ],
+        "totalCost": 4505,
+        "remark": "冷濾$400、機油Total-mc3-5w30 $235x4"
+    },
+    {
+        "date": "2021-09-28",
+        "odo": 47000,
+        "type": "maintain",
+        "title": "4.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心"
+            }
+        ],
+        "totalCost": 3164,
+        "remark": "機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2022-01-24",
+        "odo": 54000,
+        "type": "maintain",
+        "title": "5萬公里大保養",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、變速箱油、皮帶"
+            }
+        ],
+        "totalCost": 6941,
+        "remark": "機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2022-03-15",
+        "odo": 56000,
+        "type": "upgrade",
+        "title": "輪胎與輪框升級",
+        "items": [
+            {
+                "name": "四輪更換",
+                "desc": "瑪吉斯 HP5"
+            },
+            {
+                "name": "改裝升級",
+                "desc": "輪框更換"
+            }
+        ],
+        "totalCost": 17800,
+        "remark": "輪框$4000、胎$13800"
+    },
+    {
+        "date": "2022-05-28",
+        "odo": 60000,
+        "type": "maintain",
+        "title": "6萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、煞車油、冷卻水、空濾 (自備)、汽油濾心"
+            },
+            {
+                "name": "額外保養",
+                "desc": "油路積碳清洗"
+            }
+        ],
+        "totalCost": 8270,
+        "remark": "機油Total-mc3-5w30 $235x3、空濾$320"
+    },
+    {
+        "date": "2022-10-14",
+        "odo": 65000,
+        "type": "repair",
+        "title": "電瓶更換",
+        "items": [
+            {
+                "name": "電瓶更換",
+                "desc": "湯淺電池"
+            }
+        ],
+        "totalCost": 2150,
+        "remark": "電池$2150"
+    },
+    {
+        "date": "2022-11-11",
+        "odo": 66083,
+        "type": "maintain",
+        "title": "6.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)"
+            }
+        ],
+        "totalCost": 1463,
+        "remark": "機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2023-02-14",
+        "odo": 72000,
+        "type": "maintain",
+        "title": "7萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、冷濾 (自備)"
+            }
+        ],
+        "totalCost": 2798,
+        "remark": "冷濾$400、機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2023-05-20",
+        "odo": 77000,
+        "type": "maintain",
+        "title": "7.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、來令片更換"
+            }
+        ],
+        "totalCost": 4454,
+        "remark": "機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2023-11-11",
+        "odo": 85000,
+        "type": "maintain",
+        "title": "8萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、火星塞更換"
+            },
+            {
+                "name": "額外保養",
+                "desc": "節氣門積碳清洗"
+            }
+        ],
+        "totalCost": 6444,
+        "remark": "節氣門積碳清洗$2500、機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2023-12-03",
+        "odo": 86500,
+        "type": "repair",
+        "title": "大燈燈泡更換",
+        "items": [
+            {
+                "name": "燈系升級/更換",
+                "desc": "Philips Pro150 夜勁光"
+            }
+        ],
+        "totalCost": 1999,
+        "remark": ""
+    },
+    {
+        "date": "2024-01-02",
+        "odo": 88000,
+        "type": "repair",
+        "title": "電瓶更換",
+        "items": [
+            {
+                "name": "電瓶更換",
+                "desc": "Panasonic 560L25"
+            }
+        ],
+        "totalCost": 2800,
+        "remark": "電瓶$2800"
+    },
+    {
+        "date": "2024-02-15",
+        "odo": 92000,
+        "type": "maintain",
+        "title": "8.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、冷濾 (自備)、空濾 (自備)"
+            }
+        ],
+        "totalCost": 1863,
+        "remark": "冷濾$400、空濾$320、機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2024-03-29",
+        "odo": 92000,
+        "type": "upgrade",
+        "title": "燈殼修復",
+        "items": [
+            {
+                "name": "燈殼修復",
+                "desc": "燈殼修復 - 遇見光"
+            }
+        ],
+        "totalCost": 7000,
+        "remark": "更換原廠前燈殼"
+    },
+    {
+        "date": "2024-07-04",
+        "odo": 98000,
+        "type": "upgrade",
+        "title": "隔熱紙升級",
+        "items": [
+            {
+                "name": "全車隔熱紙",
+                "desc": "前擋冰鑽 F30 / 後、側 Sunmark TK95-10"
+            }
+        ],
+        "totalCost": 14000,
+        "remark": "前檔出保$0、其它$14000"
+    },
+    {
+        "date": "2024-08-23",
+        "odo": 100000,
+        "type": "maintain",
+        "title": "10萬大保養 & 換胎",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、煞車油、變速箱油、皮帶、汽油濾心"
+            },
+            {
+                "name": "四輪更換",
+                "desc": "米其林 Primacy 4+"
+            }
+        ],
+        "totalCost": 21742,
+        "remark": "輪胎 $15200 、機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2024-12-21",
+        "odo": 106700,
+        "type": "maintain",
+        "title": "10.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)"
+            }
+        ],
+        "totalCost": 1463,
+        "remark": "機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2025-03-15",
+        "odo": 114000,
+        "type": "maintain",
+        "title": "11萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、冷濾 (自備)"
+            }
+        ],
+        "totalCost": 2798,
+        "remark": "冷濾$400、機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2025-05-28",
+        "odo": 121000,
+        "type": "maintain",
+        "title": "12萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、空濾 (自備)、冷卻液"
+            },
+            {
+                "name": "電瓶更換",
+                "desc": "Global SMF56219"
+            },
+            {
+                "name": "額外保養",
+                "desc": "冷氣管路清洗"
+            }
+        ],
+        "totalCost": 10882,
+        "remark": "管路清洗$3000、空濾$320、機油Total-mc3-5w30 $235x3、電瓶$2800"
+    },
+    {
+        "date": "2025-08-07",
+        "odo": 128290,
+        "type": "maintain",
+        "title": "12.5萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、煞車油、汽油濾心"
+            }
+        ],
+        "totalCost": 7370,
+        "remark": "機油Total-mc3-5w30 $235x3"
+    },
+    {
+        "date": "2025-12-17",
+        "odo": 135098,
+        "type": "maintain",
+        "title": "13萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、煞車油、汽油濾心"
+            }
+        ],
+        "totalCost": 5013,
+        "remark": "美孚1號方程式-5w30 $450x3"
+    },
+    {
+        "date": "2026-05-25",
+        "odo": 143000,
+        "type": "maintain",
+        "title": "14萬公里定保",
+        "items": [
+            {
+                "name": "常規保養",
+                "desc": "機油 (自備)、機油濾心、冷氣濾芯 (自備)"
+            },
+            {
+                "name": "額外保養",
+                "desc": "油路積碳清洗"
+            }
+        ],
+        "totalCost": 3518,
+        "remark": "美孚1號方程式-5w30 $450x3、冷濾$320、油路積碳清洗$2500"
+    },
+    {
+        "date": "2026-07-04",
+        "odo": 145000,
+        "type": "repair",
+        "title": "輪胎更換",
+        "items": [
+            {
+                "name": "輪胎更換",
+                "desc": "瑪吉斯 HP5"
+            }
+        ],
+        "totalCost": 16320,
+        "remark": "輪胎$4080*4"
+    }
+]

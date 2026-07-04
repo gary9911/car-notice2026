@@ -1,0 +1,534 @@
+:root {
+            /* N-Performance 賽道主題 x 超感玻璃配色 */
+            --bg-main: #06090F;
+            /* 極致深邃黑 */
+            --glass-bg: rgba(22, 27, 34, 0.65);
+            /* 玻璃基底 */
+            --glass-border: rgba(255, 255, 255, 0.12);
+            /* 玻璃邊緣 */
+            --text-primary: #F0F6FC;
+            --text-secondary: #8B949E;
+            --text-muted: #475569;
+
+            /* 賽道霓虹點綴色 */
+            --accent-blue: #00A2FF;
+            /* 性能藍 */
+            --accent-red: #FF3366;
+            /* 賽道紅 (維修/警告) */
+            --accent-green: #00E676;
+            /* 螢光綠 (定保/正常) */
+            --accent-orange: #FF9100;
+            --accent-purple: #B388FF;
+
+            /* 光線反射漸層與陰影 */
+            --reflection: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.05) 100%);
+            --shadow-sm: 0 8px 32px rgba(0, 0, 0, 0.6);
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            /* 這裡加入了性能藍與賽道紅的強烈氛圍光暈 */
+            background:
+                radial-gradient(circle at 15% 20%, rgba(0, 162, 255, 0.4) 0%, transparent 40%),
+                radial-gradient(circle at 85% 80%, rgba(255, 51, 102, 0.25) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(179, 136, 255, 0.1) 0%, transparent 60%),
+                var(--bg-main);
+            background-attachment: fixed;
+            /* 讓背景固定，滑動時玻璃透視感更明顯 */
+
+            color: var(--text-primary);
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            padding: 100px 0 40px;
+        }
+
+        .num {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* 1. 更新原有的 .app-container (加上定位與 z-index 建立圖層) */
+        .app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 10px 16px;
+            position: relative;
+            /* 新增這行 */
+            z-index: 1;
+            /* 新增這行 */
+        }
+
+        /* 2. 新增專屬 HYUNDAI ELANTRA 浮水印 */
+        .app-container::before {
+            content: "HYUNDAI ELANTRA";
+            position: fixed;
+            /* 固定在畫面正中央，滑動時才有透視感 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-15deg);
+            /* 微傾斜帶出賽道動感 */
+            font-size: clamp(60px, 15vw, 120px);
+            /* 響應式超大字體 */
+            font-weight: 900;
+            font-style: italic;
+            /* 速度感斜體 */
+            color: transparent;
+            /* 字體本體透明 */
+            -webkit-text-stroke: 2px rgba(255, 255, 255, 0.04);
+            /* 極細微的玻璃描邊反光 */
+            white-space: nowrap;
+
+            /* 👇 這兩行是「不影響功能」的絕對關鍵 */
+            pointer-events: none;
+            /* 讓滑鼠/手指點擊完全穿透，不阻礙任何按鈕操作 */
+            user-select: none;
+            /* 禁止游標反白選取文字 */
+
+            z-index: -1;
+            /* 藏在卡片後面，但浮在背景光暈前面 */
+            letter-spacing: 5px;
+        }
+
+        /* 🏆 懸浮式動態島導覽列 (Dynamic Island Style) */
+        .top-nav {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 448px;
+            height: 65px;
+            background: rgba(13, 17, 23, 0.75);
+            backdrop-filter: blur(20px);
+            /* 磨砂玻璃效果 */
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 0;
+            cursor: pointer;
+            width: 25%;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+
+        .nav-item.active {
+            color: var(--accent-blue);
+            text-shadow: 0 0 12px rgba(0, 162, 255, 0.6);
+        }
+
+        .nav-item.active i {
+            transform: translateY(-2px);
+        }
+
+        /* 儀表板 Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 10px 0 30px;
+        }
+
+        .hero-title {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .hero-amount {
+            font-size: 52px;
+            font-weight: 900;
+            color: #FFF;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            gap: 4px;
+            letter-spacing: -1px;
+            text-shadow: 0 0 15px rgba(0, 162, 255, 0.5), 0 0 30px rgba(0, 162, 255, 0.2);
+            /* 數字霓虹發光 */
+        }
+
+        .hero-amount .unit {
+            font-size: 16px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-shadow: none;
+            letter-spacing: 0;
+        }
+
+        .hero-sub-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            font-size: 13px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--glass-border);
+        }
+
+        .hero-sub-info div {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-sub-info span {
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-size: 11px;
+        }
+
+        .hero-sub-info strong {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ✨ 極致玻璃卡片設計 (核心光影反射) */
+        .card {
+            position: relative;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+            /* 外部陰影與內部邊緣高光 */
+            border: 1px solid var(--glass-border);
+            transition: transform 0.2s ease;
+            overflow: hidden;
+            /* 確保光線反射層不溢出圓角 */
+        }
+
+        /* 光線反射偽元素 */
+        .card::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--reflection);
+            transform: rotate(0deg);
+            pointer-events: none;
+            /* 確保不影響點擊 */
+            z-index: 0;
+        }
+
+        /* 確保卡片內容在反射層之上 */
+        .card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card:active {
+            transform: scale(0.98);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 4px;
+        }
+
+        /* 列表項目 */
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 14px;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .item-main {
+            font-weight: 600;
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .item-sub {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: block;
+        }
+
+        .item-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            text-align: right;
+        }
+
+        /* 螢光狀態標籤 */
+        .tag {
+            position: relative;
+            z-index: 1;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-maintain {
+            background: rgba(0, 230, 118, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(0, 230, 118, 0.3);
+        }
+
+        .tag-repair {
+            background: rgba(255, 51, 102, 0.15);
+            color: var(--accent-red);
+            border: 1px solid rgba(255, 51, 102, 0.3);
+        }
+
+        .tag-upgrade {
+            background: rgba(179, 136, 255, 0.15);
+            color: var(--accent-purple);
+            border: 1px solid rgba(179, 136, 255, 0.3);
+        }
+
+        /* 圖表容器 */
+        .chart-container {
+            position: relative;
+            height: 220px;
+            width: 100%;
+            margin-top: 10px;
+            z-index: 1;
+        }
+
+        /* 按鈕風格 */
+        .btn-history,
+        .btn-manual {
+            width: 100%;
+            padding: 16px;
+            border-radius: 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-history:hover,
+        .btn-manual:hover {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 15px rgba(0, 162, 255, 0.2);
+        }
+
+        .query-input {
+            width: 100%;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            outline: none;
+            transition: 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .query-input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(0, 162, 255, 0.2);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00A2FF, #0055FF);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 0 24px;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 162, 255, 0.4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95);
+        }
+
+        /* 保養手冊表格 (暗黑玻璃版) */
+        .manual-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 16px;
+            font-size: 12px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .manual-table th,
+        .manual-table td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 6px;
+            text-align: center;
+        }
+
+        .manual-table th {
+            background: rgba(13, 17, 23, 0.9);
+            color: var(--text-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+        }
+
+        .manual-table td.item-name {
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            min-width: 90px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .mark-r {
+            color: var(--accent-red);
+            font-weight: 800;
+            font-size: 14px;
+            text-shadow: 0 0 8px rgba(255, 51, 102, 0.4);
+        }
+
+        .mark-i {
+            color: var(--accent-blue);
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        /* 隱藏功能類別 */
+        .hide {
+            display: none !important;
+        }
+
+        /* 🏆 全視窗半透明化統一設定 */
+        /* 將所有具備容器性質的元件一併處理 */
+        .card,
+        .hero-sub-info,
+        .top-nav,
+        .btn-manual,
+        .btn-history,
+        .manual-table,
+        #query-result {
+            background: var(--glass-bg) !important;
+            /* 使用統一的半透明基底 */
+            backdrop-filter: blur(25px) saturate(180%);
+            /* 增加模糊度與飽和度，玻璃質感更厚實 */
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border) !important;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1) !important;
+            color: var(--text-primary);
+        }
+
+        /* 強化按鈕與卡片的互動感：滑過時玻璃變亮 */
+        .card:hover,
+        .btn-manual:hover,
+        .btn-history:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(0, 162, 255, 0.4) !important;
+            box-shadow: 0 0 20px rgba(0, 162, 255, 0.2) !important;
+            transform: translateY(-2px);
+            transition: var(--transition-smooth);
+        }
+
+        /* 特別處理保養手冊表格的標題頭，讓它在滾動時也有透明質感 */
+        .manual-table th {
+            background: rgba(22, 27, 34, 0.9) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* 特別處理輸入框，讓它跟整體 OS 風格融合 */
+        .query-input {
+            background: rgba(0, 0, 0, 0.4) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* 確保所有卡片內的裝飾性背景色(如 remark 區塊)也變透明 */
+        div[style*="background: #F9FAFB"],
+        div[style*="background: var(--bg-main)"] {
+            background: rgba(255, 255, 255, 0.03) !important;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }

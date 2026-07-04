@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vehicle OS | 明亮保養中心 v.2</title>
+
+    <meta name="theme-color" content="#F3F4F6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="mycss.css">
+
+    <style>
+        
+    </style>
+</head>
+
+<body>
+
+    <nav class="top-nav" id="main-nav">
+        <div class="nav-item active" onclick="navTo('overview', this)"><i
+                class="fa-solid fa-list-check"></i><span>履歷</span></div>
+        <div class="nav-item" onclick="navTo('expenses', this)"><i class="fa-solid fa-chart-column"></i><span>花費</span>
+        </div>
+        <div class="nav-item" onclick="navTo('query', this)"><i class="fa-solid fa-magnifying-glass"></i><span>查詢</span>
+        </div>
+        <div class="nav-item" onclick="navTo('insurance', this)"><i
+                class="fa-solid fa-shield-halved"></i><span>保險</span></div>
+    </nav>
+
+    <div class="app-container">
+        <header class="hero-section" id="main-hero">
+            <div class="hero-title" id="hero-title">愛車當前總里程</div>
+            <div class="hero-amount"><span class="num" id="hero-main-val">--</span><span class="unit">km</span></div>
+            <div class="hero-sub-info" id="hero-sub-info">
+                <div><span>預計下次保養</span><strong class="num" id="next-service" style="color: var(--accent-blue);">--
+                        km</strong></div>
+                <div><span id="last-record-label">保養總次數</span><strong class="num" id="total-count">-- 次</strong></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <div id="overview-content">
+                <button class="btn-manual" onclick="showManual()">
+                    <i class="fa-solid fa-book-open"></i> HYUNDAI保養里程
+                </button>
+                <div id="records-container"></div>
+            </div>
+
+            <div id="expenses-content" class="hide">
+                <div class="card">
+                    <div class="card-title">費用分佈比例</div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">依保養、耗材維修、改裝分類</div>
+                    <div class="chart-container"><canvas id="pieChart"></canvas></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">歷次進廠花費 (時間軸)</div>
+                    <div style="font-size: 12px; color: var(--text-secondary);">單次進廠總金額走勢</div>
+                    <div class="chart-container" style="height: 250px;"><canvas id="barChart"></canvas></div>
+                </div>
+            </div>
+
+            <div id="query-content" class="hide">
+                <div class="card">
+                    <h2 class="card-title" style="margin-bottom: 20px;"><i class="fa-solid fa-robot"
+                            style="color: var(--accent-blue);"></i> 智慧保養顧問</h2>
+
+                    <div style="margin-bottom: 20px;">
+                        <span
+                            style="font-size: 13px; color: var(--text-secondary); display: block; margin-bottom: 8px; font-weight: 600;">請輸入進廠時的里程數：</span>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="number" id="query-odo-input" class="query-input num" placeholder="例如：146000">
+                            <button class="btn-primary" onclick="runQuery()">送出比對</button>
+                        </div>
+                    </div>
+
+                    <div id="query-result" class="hide"
+                        style="background: #F9FAFB; padding: 20px; border-radius: 12px; border: 1px solid var(--border-light); font-size: 14px; line-height: 1.6;">
+                    </div>
+                </div>
+            </div>
+
+            <div id="insurance-content" class="hide">
+                <div id="insurance-container"></div>
+            </div>
+        </main>
+
+        <div id="manual-content" class="hide" style="padding-top: 20px;">
+            <button class="btn-history" onclick="hideManual()" style="margin-bottom: 24px;">
+                <i class="fa-solid fa-arrow-left"></i> 返回履歷首頁
+            </button>
+
+            <div class="card" style="padding: 16px;">
+                <div class="card-title" style="font-size: 18px; color: var(--accent-blue);">
+                    <i class="fa-solid fa-book"></i> Elantra Sport (AD)
+                </div>
+                <div class="card-subtitle"
+                    style="margin-bottom: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 12px;">
+                    原廠保養里程建議表<br>
+                    代號：<span class="mark-i">I</span> = 檢查 (Inspect), <span class="mark-r">R</span> = 更換 (Replace)
+                </div>
+
+                <div style="overflow-x: auto; padding-bottom: 20px;">
+                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">1 ~ 12 萬公里保養表</div>
+                    <table class="manual-table num">
+                        <thead>
+                            <tr>
+                                <th>項目 \ 萬公里</th>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                                <th>5</th>
+                                <th>6</th>
+                                <th>7</th>
+                                <th>8</th>
+                                <th>9</th>
+                                <th>10</th>
+                                <th>11</th>
+                                <th>12</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="item-name">引擎機油/濾清器</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">引擎傳動皮帶</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">空氣濾清器</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">燃油濾清器</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">火星塞</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">冷卻液 (水箱精)</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">剎車液</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">變速箱油</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">冷暖氣濾清器</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="overflow-x: auto; padding-bottom: 10px;">
+                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 8px; margin-top: 10px;">13
+                        ~ 24 萬公里保養表</div>
+                    <table class="manual-table num">
+                        <thead>
+                            <tr>
+                                <th>項目 \ 萬公里</th>
+                                <th>13</th>
+                                <th>14</th>
+                                <th>15</th>
+                                <th>16</th>
+                                <th>17</th>
+                                <th>18</th>
+                                <th>19</th>
+                                <th>20</th>
+                                <th>21</th>
+                                <th>22</th>
+                                <th>23</th>
+                                <th>24</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="item-name">引擎機油/濾清器</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">引擎傳動皮帶</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">空氣濾清器</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">燃油濾清器</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">火星塞</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">冷卻液 (水箱精)</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">剎車液</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">變速箱油</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                                <td>I</td>
+                            </tr>
+                            <tr>
+                                <td class="item-name">冷暖氣濾清器</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                                <td>I</td>
+                                <td class="mark-r">R</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 12px; line-height: 1.5;">
+                    * 註1：以上為原廠常規建議，實際車況請依技師判定為主。<br>
+                    * 註2：1千公里新車保養含機油更換免工資。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let recordsData = [];
+        let insuranceData = [];
+        let customOdo = null;
+        let customDate = null;
+
+        async function loadData() {
+            try {
+                const [recordsRes, insuranceRes] = await Promise.all([
+                    fetch('records.json').catch(() => null),
+                    fetch('insurance.json').catch(() => null)
+                ]);
+
+                if (recordsRes && recordsRes.ok) {
+                    recordsData = await recordsRes.json();
+                    renderOverview();
+                }
+                if (insuranceRes && insuranceRes.ok) {
+                    insuranceData = await insuranceRes.json();
+                    renderInsurance();
+                }
+            } catch (error) { console.error('載入資料發生錯誤:', error); }
+        }
+
+        function renderOverview() {
+            const container = document.getElementById('records-container');
+            if (!recordsData || recordsData.length === 0) return;
+
+            let htmlContent = '';
+            const typeConfig = {
+                maintain: { text: '定保', class: 'tag-maintain', icon: 'fa-wrench', color: 'var(--accent-green)' },
+                repair: { text: '維修/耗材', class: 'tag-repair', icon: 'fa-triangle-exclamation', color: 'var(--accent-orange)' },
+                upgrade: { text: '升級', class: 'tag-upgrade', icon: 'fa-arrow-up-right-dots', color: 'var(--accent-purple)' }
+            };
+
+            const sortedRecords = [...recordsData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            sortedRecords.forEach(record => {
+                const config = typeConfig[record.type] || typeConfig['maintain'];
+
+                let itemsHtml = '';
+                record.items.forEach(item => {
+                    itemsHtml += `
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px;">
+                        <div>
+                            <span class="item-main">${item.name}</span>
+                            <span class="item-sub">${item.desc}</span>
+                        </div>
+                    </div>`;
+                });
+
+                let remarkHtml = '';
+                if (record.remark) {
+                    remarkHtml = `
+                    <div style="margin-top: 10px; padding: 10px 12px; background: #F9FAFB; border-radius: 8px; font-size: 12px; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 8px;">
+                        <i class="fa-solid fa-circle-info" style="color: var(--text-muted); margin-top: 2px;"></i>
+                        <span style="line-height: 1.5;">${record.remark}</span>
+                    </div>
+                `;
+                }
+
+                htmlContent += `
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title"><i class="fa-solid ${config.icon}" style="color: ${config.color}"></i> ${record.title}</h2>
+                            <span class="card-subtitle num">${record.date} · ${record.odo.toLocaleString()} km</span>
+                        </div>
+                        <span class="tag ${config.class}">${config.text}</span>
+                    </div>
+                    ${itemsHtml}
+                    ${remarkHtml}
+                    <div style="border-top: 1px dashed var(--border-light); margin-top: 12px; padding-top: 12px; display: flex; justify-content: space-between;">
+                        <span class="item-main" style="color: var(--text-secondary);">結帳總計</span>
+                        <span class="item-value num">NT$ ${record.totalCost.toLocaleString()}</span>
+                    </div>
+                </div>
+            `;
+            });
+            container.innerHTML = htmlContent;
+            updateHeroBanner('overview');
+        }
+
+        let pieChartInst = null;
+        let barChartInst = null;
+        function renderCharts() {
+            if (!recordsData || recordsData.length === 0) return;
+            let categoryTotals = { maintain: 0, repair: 0, upgrade: 0 };
+            recordsData.forEach(r => { if (categoryTotals[r.type] !== undefined) categoryTotals[r.type] += r.totalCost; });
+
+            // 設定暗黑模式的全域文字顏色
+            Chart.defaults.color = '#8B949E';
+            Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
+
+            const pieCtx = document.getElementById('pieChart');
+            if (pieChartInst) pieChartInst.destroy();
+            pieChartInst = new Chart(pieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['定期保養', '維修耗材', '改裝升級'],
+                    datasets: [{
+                        data: [categoryTotals.maintain, categoryTotals.repair, categoryTotals.upgrade],
+                        // 替換為賽道螢光色系：螢光綠、賽道紅、霓虹紫
+                        backgroundColor: ['#00E676', '#FF3366', '#B388FF'],
+                        borderWidth: 2,
+                        borderColor: '#161B22' // 配合卡片底色
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, cutout: '75%',
+                    plugins: { legend: { position: 'right', labels: { usePointStyle: true, font: { family: 'Inter', size: 12 } } } }
+                }
+            });
+
+            const ascRecords = [...recordsData].sort((a, b) => new Date(a.date) - new Date(b.date));
+            const barLabels = ascRecords.map(r => r.date.substring(0, 7));
+            const barData = ascRecords.map(r => r.totalCost);
+
+            const barCtx = document.getElementById('barChart');
+            if (barChartInst) barChartInst.destroy();
+            barChartInst = new Chart(barCtx, {
+                type: 'bar',
+                data: {
+                    labels: barLabels,
+                    datasets: [{
+                        label: '單次進廠花費',
+                        data: barData,
+                        // 替換為性能藍漸層感
+                        backgroundColor: '#00A2FF',
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => `NT$ ${c.raw.toLocaleString()}` } } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)', borderDash: [5, 5] }, ticks: { font: { family: 'Inter', size: 11 }, callback: v => (v / 1000) + 'k' } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 10 }, maxRotation: 45, minRotation: 45 } }
+                    }
+                }
+            });
+        }
+
+        function renderInsurance() {
+            const container = document.getElementById('insurance-container');
+            if (!insuranceData || insuranceData.length === 0) return;
+
+            const sortedIns = [...insuranceData].sort((a, b) => new Date(b.endDate) - new Date(a.endDate));
+            const currentIns = sortedIns[0];
+            const historyIns = sortedIns.slice(1);
+
+            const today = new Date();
+            const endDate = new Date(currentIns.endDate);
+            const isExpired = today > endDate;
+
+            const buildPolicyHtml = (ins, isCurrent) => {
+                let itemsHtml = '';
+                ins.items.forEach(item => { itemsHtml += `<div class="list-item" style="display: flex; flex-direction: column; align-items: flex-start;"><div style="width: 100%; display: flex; justify-content: space-between; margin-bottom: 4px;"><span class="item-main" style="font-size: 13px;">${item.name}</span><span class="item-value num" style="color: var(--accent-blue);">NT$ ${item.premium ? item.premium.toLocaleString() : '0'}</span></div><span class="item-sub num">保額：${item.amount}</span></div>`; });
+                return `<div class="card" ${isCurrent ? 'style="border: 2px solid var(--accent-blue);"' : 'style="opacity: 0.9;"'}><div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-light); padding-bottom: 16px; margin-bottom: 8px;"><div style="font-size: 16px; font-weight: 700; color: var(--text-primary);"><i class="fa-solid fa-shield-halved" style="color: var(--accent-blue);"></i> ${ins.company} ${ins.type}</div><div class="num" style="font-size: 12px; background: #E5E7EB; padding: 4px 8px; border-radius: 6px; color: var(--text-secondary);">${ins.startDate.substring(0, 4)} 年保單</div></div><div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0;"><div style="display: flex; flex-direction: column;"><span style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">保險期間</span><span class="num" style="font-size: 13px; font-weight: 500;">${ins.startDate} ~ ${ins.endDate}</span></div><div style="display: flex; flex-direction: column; align-items: flex-end;"><span style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">年繳總保費</span><span class="num" style="font-size: 18px; font-weight: 700; color: var(--text-primary);">NT$ ${ins.premium.toLocaleString()}</span></div></div><div style="background: var(--bg-main); border-radius: 8px; padding: 0 16px; margin-top: 8px;">${itemsHtml}</div></div>`;
+            };
+
+            let fullHtml = `<div style="margin-bottom: 12px; font-size: 13px; font-weight: 600; color: var(--text-secondary);">最新保單狀態：${isExpired ? '<span style="color:var(--accent-orange);">已過期</span>' : '<span style="color:var(--accent-green);">保障中</span>'}</div>${buildPolicyHtml(currentIns, true)}`;
+            if (historyIns.length > 0) {
+                let historyHtml = '';
+                historyIns.forEach(ins => historyHtml += buildPolicyHtml(ins, false));
+                fullHtml += `<button class="btn-history" id="btn-toggle-ins" onclick="toggleInsHistory()">檢視歷史保單 <i class="fa-solid fa-chevron-down"></i></button><div id="history-ins-container" class="hide">${historyHtml}</div>`;
+            }
+            container.innerHTML = fullHtml;
+        }
+
+        function toggleInsHistory() {
+            const container = document.getElementById('history-ins-container');
+            const btn = document.getElementById('btn-toggle-ins');
+            if (container.classList.contains('hide')) { container.classList.remove('hide'); btn.innerHTML = '隱藏歷史保單 <i class="fa-solid fa-chevron-up"></i>'; }
+            else { container.classList.add('hide'); btn.innerHTML = '檢視歷史保單 <i class="fa-solid fa-chevron-down"></i>'; }
+        }
+
+        function showManual() {
+            document.getElementById('main-nav').classList.add('hide');
+            document.getElementById('main-hero').classList.add('hide');
+            document.getElementById('main-content').classList.add('hide');
+            document.getElementById('manual-content').classList.remove('hide');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function hideManual() {
+            document.getElementById('main-nav').classList.remove('hide');
+            document.getElementById('main-hero').classList.remove('hide');
+            document.getElementById('main-content').classList.remove('hide');
+            document.getElementById('manual-content').classList.add('hide');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function runQuery() {
+            const inputVal = document.getElementById('query-odo-input').value;
+            if (!inputVal || isNaN(inputVal)) {
+                alert('請輸入有效的里程數');
+                return;
+            }
+
+            const currentOdo = parseInt(inputVal);
+
+            customOdo = currentOdo;
+            const today = new Date();
+            customDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+            updateHeroBanner('query');
+
+            const latestRecord = recordsData.reduce((prev, current) => (prev.odo > current.odo) ? prev : current);
+            let lastMilestone = Math.round(latestRecord.odo / 10000) * 10000;
+            const match = latestRecord.title.match(/(\d+)\s*萬/);
+            if (match) {
+                lastMilestone = parseInt(match[1]) * 10000;
+            }
+
+            let targetMilestone = Math.floor(currentOdo / 10000) * 10000;
+            if (targetMilestone <= lastMilestone) {
+                targetMilestone = lastMilestone + 10000;
+            }
+
+            const schedule = [
+                { name: '引擎機油 / 機油濾清器', interval: 10000, keywords: ['機油', '油濾', '機油濾清器'] },
+                { name: '冷暖氣濾清器 (冷氣濾網)', interval: 20000, keywords: ['冷氣', '冷濾', '冷暖氣'] },
+                { name: '空氣濾清器', interval: 30000, keywords: ['空濾', '空氣'] },
+                { name: '燃油濾清器', interval: 30000, keywords: ['燃油', '汽油濾'] },
+                { name: '剎車液 (煞車油)', interval: 30000, keywords: ['煞車', '剎車'] },
+                { name: '變速箱油', interval: 50000, keywords: ['變速箱'] },
+                { name: '引擎傳動皮帶', interval: 50000, keywords: ['皮帶'] },
+                { name: '冷卻液 (水箱精)', interval: 60000, keywords: ['冷卻', '水箱精'] },
+                { name: '火星塞', interval: 80000, keywords: ['火星塞'] }
+            ];
+
+            let requiredItems = [];
+            schedule.forEach(item => {
+                if (targetMilestone % item.interval === 0) {
+                    requiredItems.push(item);
+                }
+            });
+
+            let resultHTML = `
+            <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 12px; font-size: 15px;">
+                依據原廠說明書，車主您這次要做的是 <span style="color: var(--accent-blue);">${targetMilestone / 10000}萬公里</span> 的保養，應該更換：
+            </div>
+            <ul style="padding-left: 0; margin-bottom: 20px; color: var(--text-secondary); list-style-type: none;">
+        `;
+
+            let warningHTML = '';
+
+            requiredItems.forEach(reqItem => {
+                resultHTML += `<li style="margin-bottom: 8px; font-weight: 600; color: var(--text-primary);"><i class="fa-solid fa-wrench" style="font-size: 12px; color: var(--accent-blue); margin-right: 8px;"></i>${reqItem.name}</li>`;
+
+                let lastReplacedOdo = -1;
+                for (let record of recordsData) {
+                    let found = false;
+                    for (let item of record.items) {
+                        let textToSearch = (item.name + " " + item.desc).toLowerCase();
+                        for (let kw of reqItem.keywords) {
+                            if (textToSearch.includes(kw.toLowerCase())) {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (found) break;
+                    }
+                    if (found) {
+                        lastReplacedOdo = record.odo;
+                        break;
+                    }
+                }
+
+                if (lastReplacedOdo > 0) {
+                    const distanceSinceReplace = currentOdo - lastReplacedOdo;
+                    if (distanceSinceReplace >= 0 && distanceSinceReplace < (reqItem.interval * 0.8)) {
+                        const replaceMilestone = (lastReplacedOdo / 10000).toFixed(1).replace('.0', '');
+                        warningHTML += `
+                        <div style="margin-top: 8px; padding: 12px; background: #FFF4ED; border-left: 4px solid var(--accent-orange); border-radius: 6px; font-size: 13px; color: #9C3C0D; line-height: 1.6;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            但您已在上次 <strong>${replaceMilestone}萬保養時</strong> (${lastReplacedOdo.toLocaleString()} km)，已更換過 <strong>${reqItem.name}</strong> 過了，請評估是否再次更換。
+                        </div>`;
+                    }
+                }
+            });
+
+            resultHTML += `</ul>`;
+
+            if (warningHTML) {
+                resultHTML += `<div style="font-weight: 700; color: var(--accent-orange); margin-bottom: 12px; font-size: 15px;">⚠️ 智慧重複更換提醒：</div>` + warningHTML;
+            } else {
+                resultHTML += `
+                <div style="margin-top: 12px; padding: 12px; background: #ECFDF5; border-left: 4px solid var(--accent-green); border-radius: 6px; font-size: 13px; color: #065F46;">
+                    <i class="fa-solid fa-circle-check"></i>
+                    歷史紀錄比對完成，無重複更換項目，建議按原廠規範執行。
+                </div>`;
+            }
+
+            const resultDiv = document.getElementById('query-result');
+            resultDiv.innerHTML = resultHTML;
+            resultDiv.classList.remove('hide');
+        }
+
+        function updateHeroBanner(target) {
+            if (target === 'overview' || target === 'query') {
+                document.getElementById('hero-title').innerText = '愛車當前總里程';
+                document.getElementById('hero-sub-info').style.display = 'flex';
+
+                if (customOdo) {
+                    document.getElementById('hero-main-val').innerText = customOdo.toLocaleString();
+                    document.getElementById('next-service').innerText = (customOdo + 10000).toLocaleString() + ' km';
+                    document.getElementById('last-record-label').innerText = '里程更新日期';
+                    document.getElementById('total-count').innerText = customDate;
+                }
+                else if (recordsData && recordsData.length > 0) {
+                    const latestOdo = recordsData.reduce((prev, current) => (prev.odo > current.odo) ? prev : current).odo;
+                    document.getElementById('hero-main-val').innerText = latestOdo.toLocaleString();
+                    document.getElementById('next-service').innerText = (latestOdo + 10000).toLocaleString() + ' km';
+                    document.getElementById('last-record-label').innerText = '保養總次數';
+                    document.getElementById('total-count').innerText = recordsData.length + ' 次';
+                }
+                document.querySelector('.hero-amount .unit').innerText = 'km';
+            } else if (target === 'expenses') {
+                document.getElementById('hero-title').innerText = '歷史累計總花費';
+                if (recordsData && recordsData.length > 0) {
+                    const totalSum = recordsData.reduce((sum, r) => sum + r.totalCost, 0);
+                    document.getElementById('hero-main-val').innerText = totalSum.toLocaleString();
+                }
+                document.querySelector('.hero-amount .unit').innerText = 'NT$';
+                document.getElementById('hero-sub-info').style.display = 'none';
+            } else if (target === 'insurance') {
+                document.getElementById('hero-title').innerText = '距離車險到期';
+                document.getElementById('hero-sub-info').style.display = 'none';
+                if (insuranceData && insuranceData.length > 0) {
+                    const currentIns = [...insuranceData].sort((a, b) => new Date(b.endDate) - new Date(a.endDate))[0];
+                    const endDate = new Date(currentIns.endDate);
+                    const today = new Date();
+                    const diffTime = endDate - today;
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                    if (diffDays > 0) {
+                        document.getElementById('hero-main-val').innerText = diffDays;
+                        document.querySelector('.hero-amount .unit').innerText = '天';
+                        document.getElementById('hero-main-val').style.color = 'var(--text-primary)';
+                    } else {
+                        document.getElementById('hero-main-val').innerText = '已過期';
+                        document.querySelector('.hero-amount .unit').innerText = '';
+                        document.getElementById('hero-main-val').style.color = 'var(--accent-orange)';
+                    }
+                }
+            }
+        }
+
+        function navTo(target, el) {
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            el.classList.add('active');
+
+            ['overview', 'expenses', 'query', 'insurance'].forEach(t => document.getElementById(t + '-content').classList.add('hide'));
+            document.getElementById(target + '-content').classList.remove('hide');
+
+            updateHeroBanner(target);
+
+            if (target === 'expenses') {
+                setTimeout(renderCharts, 50);
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onload = () => { loadData(); };
+    </script>
+</body>
+
+</html>

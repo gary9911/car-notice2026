@@ -1,0 +1,94 @@
+[
+    {
+        "startDate": "2021-03-20",
+        "endDate": "2022-03-20",
+        "company": "兆豐產險",
+        "type": "丙式車體險",
+        "premium": 9186,
+        "items": [
+            { "name": "07-車對車碰撞損失險", "amount": "46.9 萬", "premium": 4710 },
+            { "name": "車體全損免折舊", "amount": "70,350", "premium": 75 },
+            { "name": "竊盜損失險", "amount": "46.9 萬", "premium": 748 },
+            { "name": "竊盜全損免折舊", "amount": "63,315", "premium": 125 },
+            { "name": "第三責任險 (體傷)", "amount": "100萬 / 200萬", "premium": 920 },
+            { "name": "第三責任險 (財損)", "amount": "20 萬", "premium": 1193 },
+            { "name": "超額責任險", "amount": "1,000 萬", "premium": 1415 }
+        ]
+    },
+    {
+        "startDate": "2022-03-20",
+        "endDate": "2023-03-20",
+        "company": "兆豐產險",
+        "type": "丙式車體險",
+        "premium": 7146,
+        "items": [
+            { "name": "車對車碰撞損失險", "amount": "39.9 萬", "premium": 3034 },
+            { "name": "車體全損免折舊", "amount": "59,850", "premium": 39 },
+            { "name": "竊盜損失險", "amount": "39.9 萬", "premium": 467 },
+            { "name": "竊盜全損免折舊", "amount": "53,865", "premium": 78 },
+            { "name": "第三責任險 (體傷)", "amount": "100萬 / 200萬", "premium": 920 },
+            { "name": "第三責任險 (財損)", "amount": "20 萬", "premium": 1193 },
+            { "name": "超額責任險", "amount": "1,000 萬", "premium": 1415 }
+        ]
+    },
+    {
+        "startDate": "2023-03-20",
+        "endDate": "2024-03-20",
+        "company": "兆豐產險",
+        "type": "丙式車體險",
+        "premium": 7146,
+        "items": [
+            { "name": "車對車碰撞損失險", "amount": "39.9 萬", "premium": 3034 },
+            { "name": "車體全損免折舊", "amount": "59,850", "premium": 39 },
+            { "name": "竊盜損失險", "amount": "39.9 萬", "premium": 467 },
+            { "name": "竊盜全損免折舊", "amount": "53,865", "premium": 78 },
+            { "name": "第三責任險 (體傷)", "amount": "100萬 / 200萬", "premium": 920 },
+            { "name": "第三責任險 (財損)", "amount": "20 萬", "premium": 1193 },
+            { "name": "超額責任險", "amount": "1,000 萬", "premium": 1415 }
+        ]
+    },
+    {
+        "startDate": "2024-03-28",
+        "endDate": "2025-03-28",
+        "company": "兆豐產險",
+        "type": "丙式車體險",
+        "premium": 8682,
+        "items": [
+            { "name": "強制險", "amount": "已包含", "premium": 769 },
+            { "name": "車對車碰撞損失險", "amount": "28.8 萬", "premium": 3009 },
+            { "name": "車體全損免折舊", "amount": "59,850", "premium": 45 },
+            { "name": "第三責任險 (體傷)", "amount": "100萬 / 200萬", "premium": 974 },
+            { "name": "第三責任險 (財損)", "amount": "20 萬", "premium": 1374 },
+            { "name": "超額責任險", "amount": "1,000 萬", "premium": 1460 },
+            { "name": "乘客體傷", "amount": "已附加", "premium": 1051 }
+        ]
+    },
+    {
+        "startDate": "2025-03-28",
+        "endDate": "2026-03-28",
+        "company": "兆豐產險",
+        "type": "第三責任與超額險",
+        "premium": 5301,
+        "items": [
+            { "name": "強制險", "amount": "死殘200萬 / 醫療20萬", "premium": 769 },
+            { "name": "第三責任險 (體傷)", "amount": "300萬 / 600萬", "premium": 1747 },
+            { "name": "第三責任險 (財損)", "amount": "50 萬", "premium": 2073 },
+            { "name": "超額責任險", "amount": "500 萬", "premium": 578 },
+            { "name": "駕駛人傷害險", "amount": "死殘200萬 / 醫療20萬", "premium": 134 }
+        ]
+    },
+    {
+        "startDate": "2026-03-28",
+        "endDate": "2027-03-28",
+        "company": "兆豐產險",
+        "type": "第三責任與超額險",
+        "premium": 5456,
+        "items": [
+            { "name": "強制險", "amount": "死殘200萬 / 醫療20萬", "premium": 769 },
+            { "name": "第三責任險 (體傷)", "amount": "300萬 / 600萬", "premium": 1747 },
+            { "name": "第三責任險 (財損)", "amount": "50 萬", "premium": 2228 },
+            { "name": "超額責任險", "amount": "500 萬", "premium": 578 },
+            { "name": "駕駛人傷害險", "amount": "死殘200萬 / 醫療20萬", "premium": 134 }
+        ]
+    }
+]
